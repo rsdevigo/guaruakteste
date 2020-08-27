@@ -1,65 +1,62 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Cabecalho from "./components/Cabecalho";
+import Hero from "./components/Hero";
+import Conteudo from "./components/Conteudo";
+import Equipe from "./components/Equipe";
+import Rodape from "./components/Rodape";
 
-export default function Home() {
+import fetch from "isomorphic-unfetch";
+
+export default function Home(props) {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{props.geral.nomeApp}</title>
+        <link rel="icon" href={props.geral.favicon.url} />
       </Head>
+      {/* Cabecalho */}
+      <Cabecalho  
+        redeSocial={props.geral.RedesSociais}
+        logo={props.geral.LogoApp}
+        menu={props.menu}
+        fundo={props.hero.fundo.url}
+      />
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Hero hero={props.hero} />
+      <Conteudo conteudo={props.conteudo} />
+      <Equipe equipe={props.equipe} />
+      <Rodape rodape={props.rodape} />
     </div>
-  )
+  );
 }
+
+export async function getStaticProps(context) {
+  const reqGeral = await fetch("http://guaruak.herokuapp.com/geral");
+  const geral = await reqGeral.json();
+
+  const reqMenu = await fetch("http://guaruak.herokuapp.com/menu");
+  const menu = await reqMenu.json();
+
+  const reqHero = await fetch("http://guaruak.herokuapp.com/hero");
+  const hero = await reqHero.json();
+
+  const reqConteudo = await fetch("http://guaruak.herokuapp.com/conteudo");
+  const conteudo = await reqConteudo.json();
+
+  const reqEquipe = await fetch("http://guaruak.herokuapp.com/equipe");
+  const equipe = await reqEquipe.json();
+
+  const reqRodape = await fetch("http://guaruak.herokuapp.com/rodape");
+  const rodape = await reqRodape.json();
+
+  return {
+    props: {
+      geral,
+      menu,
+      hero,
+      conteudo,
+      equipe,
+      rodape
+    }
+  }
+};
