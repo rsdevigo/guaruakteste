@@ -5,7 +5,7 @@ import Conteudo from "./components/Conteudo";
 import Equipe from "./components/Equipe";
 import Rodape from "./components/Rodape";
 
-import fetch from "isomorphic-unfetch";
+//import fetch from "isomorphic-unfetch";
 
 export default function Home(props) {
   return (
