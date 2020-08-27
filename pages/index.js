@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Cabecalho from "./components/Cabecalho";
-import Hero from "./components/Hero";
-import Conteudo from "./components/Conteudo";
-import Equipe from "./components/Equipe";
-import Rodape from "./components/Rodape";
+import Cabecalho from "../components/Cabecalho";
+import Hero from "../components/Hero";
+import Conteudo from "../components/Conteudo";
+import Equipe from "../components/Equipe";
+import Rodape from "../components/Rodape";
 
-//import fetch from "isomorphic-unfetch";
+import fetch from "isomorphic-unfetch";
 
 export default function Home(props) {
   return (
@@ -14,7 +14,7 @@ export default function Home(props) {
         <title>{props.geral.nomeApp}</title>
         <link rel="icon" href={props.geral.favicon.url} />
       </Head>
-      {/* Cabecalho */}
+
       <Cabecalho  
         redeSocial={props.geral.RedesSociais}
         logo={props.geral.LogoApp}
